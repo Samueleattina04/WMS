@@ -75,7 +75,7 @@
                                                 $slotLabel = 'Parziale';
                                             }
                                         @endphp
-                                        <a href="{{ route('warehouses.slots.detail', [$warehouse, $zone, $shelf, $slot]) }}"
+                                        <a href="{{ route('slots.show', $slot) }}"
                                            class="flex flex-col items-center justify-center w-16 h-16 rounded-lg border-2 cursor-pointer transition-colors {{ $slotColor }}"
                                            title="{{ $slot->code }} — {{ $slotLabel }} ({{ $qty }})">
                                             <span class="text-xs font-mono font-bold leading-tight">{{ $slot->code }}</span>
