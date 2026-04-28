@@ -155,8 +155,11 @@ class WarehouseController extends Controller
 
     public function slotDetail(Slot $slot)
     {
-        $slot->load(['shelf.zone.warehouse']);
-        $stockLocations = StockLocation::where('slot_id', $slot->id)->with('product')->get();
-        return view('warehouses.slots.detail', compact('slot', 'stockLocations'));
+        $slot->load(['shelf.zone.warehouse', 'stockLocations.product']);
+        $shelf = $slot->shelf;
+        $zone = $shelf->zone;
+        $warehouse = $zone->warehouse;
+        $stockLocations = $slot->stockLocations;
+        return view('warehouses.slots.detail', compact('slot', 'stockLocations', 'shelf', 'zone', 'warehouse'));
     }
 }
