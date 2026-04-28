@@ -7,7 +7,7 @@
                     @csrf
                     <x-btn type="submit" variant="primary">Genera Picking List</x-btn>
                 </form>
-            @elseif($salesOrder->pickingList)
+            @elseif($salesOrder->pickingList?->id)
                 <x-btn href="{{ route('picking.show', $salesOrder->pickingList) }}" variant="secondary">Vedi Picking</x-btn>
             @endif
             @if($salesOrder->status === 'packed')
