@@ -40,8 +40,7 @@ class ReportController extends Controller
     {
         $company = app('currentCompany');
 
-        $stockData = StockLocation::where('company_id', $company->id)
-            ->join('products', 'stock_locations.product_id', '=', 'products.id')
+        $stockData = StockLocation::join('products', 'stock_locations.product_id', '=', 'products.id')
             ->join('slots', 'stock_locations.slot_id', '=', 'slots.id')
             ->join('shelves', 'slots.shelf_id', '=', 'shelves.id')
             ->join('zones', 'shelves.zone_id', '=', 'zones.id')
@@ -59,8 +58,7 @@ class ReportController extends Controller
             ->orderBy('products.name')
             ->paginate(50)->withQueryString();
 
-        $totalValue = StockLocation::where('company_id', $company->id)
-            ->join('products', 'stock_locations.product_id', '=', 'products.id')
+        $totalValue = StockLocation::join('products', 'stock_locations.product_id', '=', 'products.id')
             ->sum(DB::raw('stock_locations.quantity * products.cost_price'));
 
         if ($request->export === 'excel') {

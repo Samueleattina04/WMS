@@ -17,8 +17,7 @@ class DashboardService
     {
         $companyId = $company->id;
 
-        $warehouseValue = StockLocation::where('company_id', $companyId)
-            ->join('products', 'stock_locations.product_id', '=', 'products.id')
+        $warehouseValue = StockLocation::join('products', 'stock_locations.product_id', '=', 'products.id')
             ->sum(DB::raw('stock_locations.quantity * products.cost_price'));
 
         $dailyMovements = Movement::where('company_id', $companyId)
