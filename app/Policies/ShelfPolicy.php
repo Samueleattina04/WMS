@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Shelf;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class ShelfPolicy extends BasePolicy
 {
     public function create(User $user): bool { return $user->isManager(); }
-    public function update(User $user, Shelf $shelf): bool { return $user->isManager(); }
-    public function delete(User $user, Shelf $shelf): bool { return $user->isAdmin(); }
+    public function update(User $user, Model $model): bool { return $user->isManager(); }
+    public function delete(User $user, Model $model): bool { return $user->isAdmin(); }
 }

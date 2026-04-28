@@ -3,11 +3,11 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\Model;
 
 class WarehousePolicy extends BasePolicy
 {
     public function create(User $user): bool { return $user->isAdmin(); }
-    public function update(User $user, Warehouse $warehouse): bool { return $user->isAdmin(); }
-    public function delete(User $user, Warehouse $warehouse): bool { return $user->isAdmin(); }
+    public function update(User $user, Model $model): bool { return $user->isAdmin(); }
+    public function delete(User $user, Model $model): bool { return $user->isAdmin(); }
 }

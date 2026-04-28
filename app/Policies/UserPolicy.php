@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class UserPolicy extends BasePolicy
 {
@@ -16,12 +17,12 @@ class UserPolicy extends BasePolicy
         return $user->isAdmin();
     }
 
-    public function update(User $user, User $model): bool
+    public function update(User $user, Model $model): bool
     {
         return $user->isAdmin();
     }
 
-    public function delete(User $user, User $model): bool
+    public function delete(User $user, Model $model): bool
     {
         return $user->isAdmin() && $user->id !== $model->id;
     }

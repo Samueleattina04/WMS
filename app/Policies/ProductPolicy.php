@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductPolicy extends BasePolicy
 {
@@ -12,7 +12,7 @@ class ProductPolicy extends BasePolicy
         return $user->isManager();
     }
 
-    public function update(User $user, Product $product): bool
+    public function update(User $user, Model $model): bool
     {
         return $user->isManager();
     }

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Movement;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class MovementPolicy extends BasePolicy
 {
@@ -12,13 +12,13 @@ class MovementPolicy extends BasePolicy
         return $user->isWarehouse();
     }
 
-    public function update(User $user, Movement $movement): bool
+    public function update(User $user, Model $model): bool
     {
-        return false; // Movements are immutable
+        return false;
     }
 
-    public function delete(User $user, Movement $movement): bool
+    public function delete(User $user, Model $model): bool
     {
-        return false; // Movements cannot be deleted
+        return false;
     }
 }
