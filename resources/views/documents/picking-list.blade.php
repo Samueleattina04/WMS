@@ -5,57 +5,65 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: DejaVu Sans, sans-serif; font-size: 10px; color: #1a1a1a; }
-    .header { padding-bottom: 12px; border-bottom: 2px solid #059669; margin-bottom: 15px; }
-    .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .company-name { font-size: 16px; font-weight: bold; color: #059669; }
-    .doc-badge { background: #059669; color: white; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: bold; }
-    .info-strip { display: flex; gap: 15px; margin-top: 10px; font-size: 10px; }
-    .info-item { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 3px; padding: 5px 10px; }
-    .info-item strong { display: block; font-size: 9px; color: #15803d; text-transform: uppercase; letter-spacing: 0.3px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-    thead th { background: #059669; color: white; padding: 7px 8px; text-align: left; font-size: 9px; text-transform: uppercase; letter-spacing: 0.3px; }
-    tbody td { padding: 7px 8px; border-bottom: 1px solid #f3f4f6; }
-    tbody tr:nth-child(even) td { background: #f9fafb; }
-    .slot-badge { display: inline-block; background: #1e3a5f; color: white; font-family: monospace; font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
-    .lot-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 9px; padding: 2px 5px; border-radius: 3px; }
-    .qty-big { font-size: 14px; font-weight: bold; text-align: center; }
-    .check-box { width: 20px; height: 20px; border: 2px solid #374151; border-radius: 3px; display: inline-block; }
-    .footer { margin-top: 20px; border-top: 1px solid #e5e7eb; padding-top: 10px; display: flex; justify-content: space-between; font-size: 9px; color: #9ca3af; }
-    .signature-area { margin-top: 30px; display: flex; gap: 30px; }
-    .signature-box { flex: 1; border-top: 1px solid #374151; padding-top: 5px; font-size: 9px; color: #6b7280; text-align: center; }
-    .fifo-badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 8px; padding: 1px 4px; border-radius: 2px; }
+    table.layout { width: 100%; border-collapse: collapse; }
+    table.info-strip { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    table.info-strip td { padding: 5px 8px; border: 1px solid #bbf7d0; background: #f0fdf4; font-size: 10px; }
+    .info-label { font-size: 9px; font-weight: bold; color: #15803d; text-transform: uppercase; display: block; }
+    .company-name { font-size: 15px; font-weight: bold; color: #059669; }
+    .doc-badge { background: #059669; color: white; padding: 4px 12px; font-size: 13px; font-weight: bold; }
+    table.items { width: 100%; border-collapse: collapse; margin-bottom: 15px; margin-top: 15px; }
+    table.items thead th { background: #059669; color: white; padding: 6px 8px; text-align: left; font-size: 9px; text-transform: uppercase; }
+    table.items tbody td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
+    table.items tbody tr:nth-child(even) td { background: #f9fafb; }
+    .slot-badge { background: #1e3a5f; color: white; font-family: monospace; font-size: 10px; padding: 2px 6px; font-weight: bold; }
+    .lot-badge { background: #fef3c7; color: #92400e; font-size: 9px; padding: 2px 5px; }
+    .fifo-badge { background: #dbeafe; color: #1e40af; font-size: 8px; padding: 1px 4px; }
+    .check-box { width: 18px; height: 18px; border: 2px solid #374151; display: inline-block; }
+    .qty-big { font-size: 13px; font-weight: bold; text-align: center; }
+    table.signatures { width: 100%; border-collapse: collapse; margin-top: 30px; }
+    table.signatures td { border-top: 1px solid #374151; padding-top: 5px; font-size: 9px; color: #6b7280; text-align: center; width: 33%; padding-left: 10px; padding-right: 10px; }
 </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-top">
-            <div>
-                <div class="company-name">{{ $company->name }}</div>
-                <p style="color:#6b7280;font-size:9px;">{{ $company->address }}</p>
-            </div>
-            <div class="doc-badge">LISTA DI PRELIEVO</div>
-        </div>
-        <div class="info-strip">
-            <div class="info-item"><strong>N. Ordine</strong>{{ $order->order_number }}</div>
-            <div class="info-item"><strong>Cliente</strong>{{ $order->customer->name }}</div>
-            <div class="info-item"><strong>Data Emissione</strong>{{ now()->format('d/m/Y H:i') }}</div>
-            @if($order->expected_date)
-            <div class="info-item"><strong>Data Consegna</strong>{{ $order->expected_date->format('d/m/Y') }}</div>
-            @endif
-            <div class="info-item"><strong>Operatore</strong>_______________________</div>
-        </div>
+
+    {{-- Header --}}
+    <div style="border-bottom: 2px solid #059669; margin-bottom: 12px; padding-bottom: 10px;">
+        <table class="layout">
+            <tr>
+                <td style="vertical-align:top;">
+                    <div class="company-name">{{ $company->name }}</div>
+                    <div style="color:#6b7280;font-size:9px;">{{ $company->address }}</div>
+                </td>
+                <td style="vertical-align:top;text-align:right;">
+                    <span class="doc-badge">LISTA DI PRELIEVO</span>
+                </td>
+            </tr>
+        </table>
+
+        <table class="info-strip" style="margin-top:10px;">
+            <tr>
+                <td><span class="info-label">N. Ordine</span>{{ $order->order_number }}</td>
+                <td><span class="info-label">Cliente</span>{{ $order->customer->name }}</td>
+                <td><span class="info-label">Data Emissione</span>{{ now()->format('d/m/Y H:i') }}</td>
+                @if($order->expected_date)
+                <td><span class="info-label">Data Consegna</span>{{ $order->expected_date->format('d/m/Y') }}</td>
+                @endif
+                <td><span class="info-label">Operatore</span>_______________________</td>
+            </tr>
+        </table>
     </div>
 
-    <table>
+    {{-- Items --}}
+    <table class="items">
         <thead>
             <tr>
                 <th style="width:22px;"></th>
                 <th>Prodotto</th>
-                <th>SKU</th>
-                <th>Posizione</th>
-                <th>Lotto / Scadenza</th>
-                <th style="text-align:center;">Q.tà Richiesta</th>
-                <th style="text-align:center;">Q.tà Prelevata</th>
+                <th style="width:80px;">SKU</th>
+                <th style="width:80px;">Posizione</th>
+                <th style="width:100px;">Lotto / Scadenza</th>
+                <th class="text-center" style="width:65px;">Q.tà Rich.</th>
+                <th class="text-center" style="width:65px;">Q.tà Prel.</th>
             </tr>
         </thead>
         <tbody>
@@ -64,48 +72,55 @@
                 <td style="text-align:center;"><span class="check-box"></span></td>
                 <td>
                     <strong>{{ $item['product_name'] }}</strong>
-                    @if(isset($item['fifo']) && $item['fifo'])<span class="fifo-badge">FIFO</span>@endif
+                    @if(!empty($item['fifo'])) <span class="fifo-badge">FIFO</span>@endif
                 </td>
                 <td style="font-family:monospace;color:#6b7280;font-size:9px;">{{ $item['sku'] ?? '—' }}</td>
                 <td>
-                    @if(isset($item['slot_code']))
+                    @if(!empty($item['slot_code']))
                         <span class="slot-badge">{{ $item['slot_code'] }}</span>
                     @else
                         <span style="color:#9ca3af;">Da assegnare</span>
                     @endif
                 </td>
                 <td>
-                    @if(isset($item['lot_number']) && $item['lot_number'])
-                        <span class="lot-badge">{{ $item['lot_number'] }}</span>
+                    @if(!empty($item['lot_number']))
+                        <span class="lot-badge">{{ $item['lot_number'] }}</span><br>
                     @endif
-                    @if(isset($item['expiry_date']) && $item['expiry_date'])
-                        <br><span style="font-size:9px;color:#6b7280;">Sc: {{ \Carbon\Carbon::parse($item['expiry_date'])->format('d/m/Y') }}</span>
+                    @if(!empty($item['expiry_date']))
+                        <span style="font-size:9px;color:#6b7280;">Sc: {{ \Carbon\Carbon::parse($item['expiry_date'])->format('d/m/Y') }}</span>
                     @endif
+                    @if(empty($item['lot_number']) && empty($item['expiry_date']))—@endif
                 </td>
                 <td class="qty-big">{{ $item['quantity'] }}</td>
-                <td style="text-align:center;border-bottom: 1px dashed #374151;min-width:60px;">&nbsp;</td>
+                <td style="text-align:center;border-bottom:1px dashed #374151;">&nbsp;</td>
             </tr>
             @endforeach
         </tbody>
     </table>
 
     @if($order->notes)
-    <div style="background:#fefce8;border:1px solid #fde68a;border-radius:4px;padding:8px 12px;margin-bottom:15px;">
-        <strong style="font-size:9px;color:#92400e;">NOTE ORDINE:</strong>
-        <p style="margin-top:2px;">{{ $order->notes }}</p>
+    <div style="background:#fefce8;border:1px solid #fde68a;padding:8px;margin-bottom:15px;font-size:10px;">
+        <strong>Note ordine:</strong> {{ $order->notes }}
     </div>
     @endif
 
-    <div class="signature-area">
-        <div class="signature-box">Prelevato da (firma)</div>
-        <div class="signature-box">Controllato da (firma)</div>
-        <div class="signature-box">Consegnato da (firma)</div>
-    </div>
+    {{-- Signatures --}}
+    <table class="signatures">
+        <tr>
+            <td>Prelevato da (firma)</td>
+            <td>Controllato da (firma)</td>
+            <td>Consegnato da (firma)</td>
+        </tr>
+    </table>
 
-    <div class="footer">
-        <span>Lista generata il {{ now()->format('d/m/Y \a\l\l\e H:i') }}</span>
-        <span>Ordine: {{ $order->order_number }} — {{ $company->name }}</span>
-        <span>Pag. 1</span>
-    </div>
+    {{-- Footer --}}
+    <table class="layout" style="margin-top:15px;border-top:1px solid #e5e7eb;padding-top:8px;">
+        <tr>
+            <td style="font-size:9px;color:#9ca3af;">Lista generata il {{ now()->format('d/m/Y \a\l\l\e H:i') }}</td>
+            <td style="font-size:9px;color:#9ca3af;text-align:center;">Ordine: {{ $order->order_number }} — {{ $company->name }}</td>
+            <td style="font-size:9px;color:#9ca3af;text-align:right;">Pag. 1</td>
+        </tr>
+    </table>
+
 </body>
 </html>
