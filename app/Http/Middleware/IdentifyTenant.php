@@ -16,7 +16,12 @@ class IdentifyTenant
 
         // Skip tenant identification on auth routes that don't need it (registration)
         if ($host === $tenantDomain || $host === 'localhost' || $host === '127.0.0.1') {
-            // Main domain - allow access to registration page
+            // In local dev, auto-load the first active company as the demo tenant
+            $company = Company::where('is_active', true)->first();
+            if ($company) {
+                app()->instance('currentCompany', $company);
+                view()->share('currentCompany', $company);
+            }
             return $next($request);
         }
 
